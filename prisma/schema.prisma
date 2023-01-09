@@ -9,3 +9,21 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Album {
+  id    Int     @id @default(autoincrement())
+  name  String?
+  image String?
+  Songs Songs[]
+}
+
+model Songs {
+  id        Int       @id @default(autoincrement())
+  name      String?
+  image     String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime?
+  album     Album     @relation(fields: [albumID], references: [id])
+  albumID   Int
+  // likedSongs boolean
+}
