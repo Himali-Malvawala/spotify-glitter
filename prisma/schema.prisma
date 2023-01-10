@@ -11,10 +11,11 @@ datasource db {
 }
 
 model Album {
-  id    Int     @id @default(autoincrement())
-  name  String?
-  image String?
-  Songs Songs[]
+  id        Int       @id @default(autoincrement())
+  name      String?
+  image     String?
+  createdAt DateTime? @default(now())
+  Songs     Songs[]
 }
 
 model Songs {
@@ -22,7 +23,7 @@ model Songs {
   name      String?
   image     String?
   createdAt DateTime? @default(now())
-  updatedAt DateTime?
+  updatedAt DateTime? @updatedAt
   album     Album     @relation(fields: [albumID], references: [id])
   albumID   Int
   // likedSongs boolean
