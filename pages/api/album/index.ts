@@ -5,12 +5,12 @@ export default async function albums(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { name, image } = JSON.parse(req.body);
+  const { name, image } = req.body;
 
   if (req.method === "GET") {
     try {
       const response = await prisma.album.findMany();
-      res.status(200).json({ response });
+      res.status(200).json(response);
     } catch (error) {
       res.status(404).json({ message: "No Albums found!" });
     }
