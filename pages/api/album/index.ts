@@ -5,8 +5,6 @@ export default async function albums(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { name, image } = req.body;
-
   if (req.method === "GET") {
     try {
       const response = await prisma.album.findMany();
@@ -16,6 +14,7 @@ export default async function albums(
     }
   }
   if (req.method === "POST") {
+    const { name, image } = req?.body;
     try {
       const response = await prisma.album.create({
         data: {
