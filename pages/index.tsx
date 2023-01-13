@@ -52,6 +52,10 @@ const Home = () => {
         <div className="mt-[23rem] sm:mt-[25rem] md:mt-[27rem] 2xl:mt-[29rem] z-50 flex flex-col items-center">
           <Canvas>
             <AlbumForm />
+            <p className="mb-10 underline-offset-2 underline text-lg text-zinc-300">
+              This website is currently under development. Please comeback
+              later!
+            </p>
             <div className="flex flex-wrap gap-6 justify-center">
               {albums?.map((item: Album, index) => {
                 return <AlbumCard item={item} key={index} />;
