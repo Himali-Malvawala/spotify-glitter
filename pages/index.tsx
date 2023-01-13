@@ -10,6 +10,7 @@ import AlbumForm from "../components/album/AlbumForm";
 const rubik = Rubik({
   style: "italic",
   weight: "800",
+  subsets: ["latin"],
 });
 
 interface Album {
