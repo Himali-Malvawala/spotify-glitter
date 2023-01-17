@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import { Rubik } from "@next/font/google";
+import { BiRefresh } from "react-icons/bi";
 import axios from "axios";
 import Canvas from "../components/canvas/Canvas";
 import AlbumCard from "../components/album/AlbumCard";
@@ -22,8 +23,9 @@ interface Album {
 
 const Home = () => {
   const [albums, setAlbums] = useState<Album[]>();
+  const [effect, setEffect] = useState(false);
 
-  useEffect(() => {
+  const get = () => {
     axios
       .get("/api/album")
       .then((res) => {
@@ -32,6 +34,10 @@ const Home = () => {
       .catch((error) => {
         console.log("error", error);
       });
+  };
+
+  useEffect(() => {
+    get();
   }, []);
 
   return (
@@ -51,6 +57,19 @@ const Home = () => {
         </div>
         <div className="mt-[23rem] sm:mt-[25rem] md:mt-[27rem] 2xl:mt-[29rem] z-50 flex flex-col items-center">
           <Canvas>
+            <div className="mb-4">
+              <BiRefresh
+                onClick={() => {
+                  setEffect(true);
+                  get();
+                }}
+                className={`${
+                  effect && "animate-spin-up"
+                } cursor-pointer bg-[#444141]/40 hover:bg-[#444141]/70 rounded-full`}
+                size={25}
+                onAnimationEnd={() => setEffect(false)}
+              />
+            </div>
             <AlbumForm />
             <p className="mb-10 underline-offset-2 underline text-lg text-zinc-300">
               This website is currently under development. Please comeback
