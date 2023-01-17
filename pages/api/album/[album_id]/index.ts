@@ -5,21 +5,22 @@ export default async function albumDetails(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const albumID = parseInt(req.query.album_id as string);
-  const { name, image } = JSON.parse(req.body);
-
   if (req.method === "GET") {
+    const albumID = parseInt(req.query.album_id as string);
     try {
       const response = await prisma.album.findUnique({
         where: { id: albumID },
       });
-      res.status(200).json({ response });
+      res.status(200).json(response);
     } catch (error) {
       res.status(404).json({ message: "Couldn't find the mentioned album" });
     }
   }
 
   if (req.method === "PUT") {
+    const albumID = parseInt(req.query.album_id as string);
+
+    const { name, image } = req?.body;
     try {
       const response = await prisma.album.update({
         where: { id: albumID },
@@ -28,12 +29,13 @@ export default async function albumDetails(
           image,
         },
       });
-      res.status(200).json({ response });
+      res.status(200).json(response);
     } catch (error) {
       res.status(404).json({ message: "Couldn't update the mentioned album" });
     }
   }
   if (req.method === "DELETE") {
+    const albumID = parseInt(req.query.album_id as string);
     try {
       const response = await prisma.album.delete({
         where: { id: albumID },
