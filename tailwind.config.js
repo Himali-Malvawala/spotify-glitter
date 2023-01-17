@@ -17,9 +17,14 @@ module.exports = {
             transform: "translateY(0)",
           },
         },
+        "spin-up": {
+          "0%": { transform: "rotate(-1deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.5s ease-out",
+        "spin-up": "spin-up 1s ease-in-out",
       },
     },
   },
