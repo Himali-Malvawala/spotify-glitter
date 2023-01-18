@@ -1,6 +1,7 @@
 import { Rubik } from "@next/font/google";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import axios from "axios";
 import moment from "moment";
@@ -10,6 +11,11 @@ import { MdEdit } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
 import Canvas from "../../components/canvas/Canvas";
 import Button from "../../components/button/Button";
+// import Songs from "../../components/songs/songs";
+
+const Songs = dynamic(() => import("../../components/songs/songs"), {
+  ssr: false,
+});
 
 const rubik = Rubik({
   style: "italic",
@@ -24,6 +30,15 @@ interface Details {
   createdAt: Date;
 }
 
+interface Songs {
+  albumID: Number;
+  createdAt: Date;
+  id: Number;
+  image: string;
+  name: string;
+  updatedAt: Date;
+}
+
 interface FormData {
   name: String;
   image: String;
@@ -35,8 +50,11 @@ const AlbumDetails = () => {
   const [effect, setEffect] = useState(false);
   const [toggleForm, setToggleForm] = useState(false);
   const [form, setForm] = useState<FormData>({ name: "", image: "" });
+  const [songs, setSongs] = useState<Songs[]>();
   const router = useRouter();
   const albumID = router?.query?.id;
+
+  //get album details
 
   const get = async () => {
     await axios
@@ -55,6 +73,8 @@ const AlbumDetails = () => {
     }
   }, [albumID]);
 
+  //delete an album
+
   const onDelete = async (id: Number) => {
     await axios
       .delete(`/api/album/${id}`)
@@ -65,6 +85,8 @@ const AlbumDetails = () => {
         console.log("error onDelete", err);
       });
   };
+
+  //update the album and submit the form
 
   const onChangeHandler = (event: any) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -90,6 +112,25 @@ const AlbumDetails = () => {
     }
   };
 
+  //Get songs
+
+  const getSongs = async () => {
+    axios
+      .get(`/api/album/${albumID}/songs`)
+      .then((res) => {
+        setSongs(res.data);
+      })
+      .catch((err) => {
+        console.log("err while getting all the songs");
+      });
+  };
+
+  useEffect(() => {
+    if (albumID) {
+      getSongs();
+    }
+  }, [albumID]);
+
   return (
     <div>
       <Head>
@@ -107,12 +148,13 @@ const AlbumDetails = () => {
         </div>
         <div className="mt-[23rem] sm:mt-[25rem] md:mt-[27rem] 2xl:mt-[29rem] z-50 flex flex-col items-center">
           <Canvas>
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-8">
               <div>
                 <BiRefresh
                   onClick={() => {
                     setEffect(true);
                     get();
+                    getSongs();
                   }}
                   className={`${
                     effect && "animate-spin-up"
@@ -123,7 +165,7 @@ const AlbumDetails = () => {
               </div>
               <div className="flex items-center gap-4">
                 <AiOutlineEdit
-                  className="cursor-pointer text-[#D7E9B9] hover:text-[#FF7B54] rounded-full"
+                  className="cursor-pointer text-[#D7E9B9] hover:text-[#FF7B54]"
                   size={23}
                   onClick={() => {
                     setToggleForm(!toggleForm);
@@ -168,7 +210,7 @@ const AlbumDetails = () => {
                 </form>
               </div>
             )}
-            <div className="md:flex items-end gap-8">
+            <div className="md:flex items-end gap-8 mb-16">
               <img
                 src={details?.image as string}
                 alt={details?.name as string}
@@ -179,10 +221,11 @@ const AlbumDetails = () => {
                 <p className="text-6xl font-bold mt-2">{details?.name}</p>
                 <div className="flex items-center text-zinc-400 mt-8 mb-2">
                   <p>{moment(details?.createdAt).fromNow()}</p>
-                  <BsDot /> <p>234 songs</p>
+                  <BsDot /> <p>{songs?.length} songs</p>
                 </div>
               </div>
             </div>
+            <Songs songs={songs} getSongs={getSongs} />
           </Canvas>
         </div>
       </main>
