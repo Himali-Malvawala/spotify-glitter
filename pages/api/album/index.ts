@@ -10,7 +10,7 @@ export default async function albums(
       const response = await prisma.album.findMany();
       res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: "No Albums found!" });
+      res.status(404).json({ message: "No Albums found!", error });
     }
   }
   if (req.method === "POST") {
