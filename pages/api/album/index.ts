@@ -24,7 +24,7 @@ export default async function albums(
       });
       res.status(200).json({ message: "Album created!" });
     } catch (error) {
-      res.status(404).json({ message: "Error while creating an album" });
+      res.status(404).json({ message: "Error while creating an album", error });
     }
   }
 }

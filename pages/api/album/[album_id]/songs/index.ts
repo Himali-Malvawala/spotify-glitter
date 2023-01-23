@@ -10,7 +10,7 @@ export default async function songs(req: NextApiRequest, res: NextApiResponse) {
       });
       res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: "No Songs found!" });
+      res.status(404).json({ message: "No Songs found!", error });
     }
   }
   if (req.method === "POST") {
@@ -30,7 +30,7 @@ export default async function songs(req: NextApiRequest, res: NextApiResponse) {
       });
       res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: "Error while creating a song" });
+      res.status(404).json({ message: "Error while creating a song", error });
     }
   }
 }

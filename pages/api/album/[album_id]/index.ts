@@ -13,7 +13,9 @@ export default async function albumDetails(
       });
       res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: "Couldn't find the mentioned album" });
+      res
+        .status(404)
+        .json({ message: "Couldn't find the mentioned album", error });
     }
   }
 
@@ -31,7 +33,9 @@ export default async function albumDetails(
       });
       res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: "Couldn't update the mentioned album" });
+      res
+        .status(404)
+        .json({ message: "Couldn't update the mentioned album", error });
     }
   }
   if (req.method === "DELETE") {
@@ -42,7 +46,9 @@ export default async function albumDetails(
       });
       res.status(200).json({ message: "Album deleted!" });
     } catch (error) {
-      res.status(404).json({ message: "couldn't delete the mentioned album" });
+      res
+        .status(404)
+        .json({ message: "couldn't delete the mentioned album", error });
     }
   }
 }

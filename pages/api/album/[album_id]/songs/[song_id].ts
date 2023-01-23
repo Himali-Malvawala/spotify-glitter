@@ -13,7 +13,9 @@ export default async function songDetails(
       });
       res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: "Couldn't find the mentioned song" });
+      res
+        .status(404)
+        .json({ message: "Couldn't find the mentioned song", error });
     }
   }
 
@@ -30,7 +32,9 @@ export default async function songDetails(
       });
       res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: "Couldn't update the mentioned song" });
+      res
+        .status(404)
+        .json({ message: "Couldn't update the mentioned song", error });
     }
   }
 
@@ -42,7 +46,9 @@ export default async function songDetails(
       });
       res.status(200).json({ message: "Song deleted!" });
     } catch (error) {
-      res.status(404).json({ message: "couldn't delete the mentioned song" });
+      res
+        .status(404)
+        .json({ message: "couldn't delete the mentioned song", error });
     }
   }
 }
