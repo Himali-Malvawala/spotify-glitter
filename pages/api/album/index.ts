@@ -6,8 +6,8 @@ export default async function albums(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const response = await prisma.album.findMany();
     try {
+      const response = await prisma.album.findMany();
       res.status(200).json(response);
     } catch (error) {
       res.status(404).json({ message: "No Albums found!", error });
