@@ -11,7 +11,7 @@ export default async function albums(
       const response = await prisma.album.findMany();
       res.status(200).json(response);
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error instanceof Prisma.PrismaClientUnknownRequestError) {
         res.status(500).json({ message: "hit the spot", error });
       }
       res.status(404).json({ message: "No Albums found!", error });
