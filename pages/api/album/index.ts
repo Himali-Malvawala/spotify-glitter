@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../utils/client";
-// import { Prisma } from "@prisma/client";
 
 export default async function albums(
   req: NextApiRequest,
@@ -11,9 +10,6 @@ export default async function albums(
       const response = await prisma.album.findMany();
       res.status(200).json(response);
     } catch (error) {
-      // if (error instanceof Prisma.PrismaClientInitializationError) {
-      //   res.status(700).json({ message: "hit the spot" });
-      // }
       res.status(404).json({ message: "No Albums found!", error });
     }
   }
