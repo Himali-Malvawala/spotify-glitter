@@ -12,7 +12,7 @@ export default async function albums(
       res.status(200).json(response);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientInitializationError) {
-        res.status(500).json({ message: "hit the spot", error });
+        res.status(500).json({ message: "hit the spot" });
       }
       res.status(404).json({ message: "No Albums found!", error });
     }
