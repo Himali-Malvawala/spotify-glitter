@@ -51,11 +51,8 @@ const Songs = ({ songs, getSongs }: any) => {
 
           {songs?.map((item: Songs, index: any) => {
             return (
-              <div>
-                <div
-                  key={index}
-                  className="flex hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-md group animate"
-                >
+              <div key={index}>
+                <div className="flex hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-md group animate">
                   <div className="w-[60%] flex gap-2">
                     <div>
                       <img
