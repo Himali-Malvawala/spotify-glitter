@@ -216,7 +216,7 @@ const AlbumDetails = () => {
               <img
                 src={details?.image as string}
                 alt={details?.name as string}
-                className="md:w-60 md:h-60 drop-shadow-[0_2px_10px_#1f2937] rounded-sm"
+                className="md:w-60 md:h-60 drop-shadow-[0_2px_10px_#1f2937] rounded-sm object-cover object-center"
               />
               <div className="text-left">
                 <p className="font-medium text-sm">ALBUM</p>
