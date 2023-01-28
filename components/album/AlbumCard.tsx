@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import Link from "next/link";
+import moment from "moment";
 import { FaPlay } from "react-icons/fa";
 
 const AlbumCard = (props: any) => {
@@ -21,7 +21,7 @@ const AlbumCard = (props: any) => {
           {props?.item?.name}
         </h6>
         <p className="text-left mr-auto px-5 font-[550] text-sm text-zinc-400 mt-[0.15rem]">
-          234 songs
+          {moment(props?.item?.createdAt).fromNow()}
         </p>
       </div>
     </Link>
