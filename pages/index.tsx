@@ -71,10 +71,10 @@ const Home = () => {
               />
             </div>
             <AlbumForm />
-            <p className="mb-10 underline-offset-2 underline text-lg text-zinc-300">
+            {/* <p className="mb-10 underline-offset-2 underline text-lg text-zinc-300">
               This website is currently under development. Please comeback
               later!
-            </p>
+            </p> */}
             <div className="flex flex-wrap gap-6 justify-center">
               {albums?.map((item: Album, index) => {
                 return <AlbumCard item={item} key={index} />;
