@@ -9,6 +9,7 @@ import { BsDot } from "react-icons/bs";
 import { BiRefresh } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
+import { RiLoader3Line } from "react-icons/ri";
 import Canvas from "../../components/canvas/Canvas";
 import Button from "../../components/button/Button";
 // import Songs from "../../components/songs/songs";
@@ -51,6 +52,7 @@ const AlbumDetails = () => {
   const [toggleForm, setToggleForm] = useState(false);
   const [form, setForm] = useState<FormData>({ name: "", image: "" });
   const [songs, setSongs] = useState<Songs[]>();
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const albumID = router?.query?.id;
 
@@ -70,6 +72,7 @@ const AlbumDetails = () => {
     if (albumID && !hasFetched) {
       setHasFetched(true);
       get();
+      setLoading(false);
     }
   }, [albumID]);
 
@@ -150,84 +153,92 @@ const AlbumDetails = () => {
         </div>
         <div className="mt-[23rem] sm:mt-[25rem] md:mt-[27rem] 2xl:mt-[29rem] z-50 flex flex-col items-center">
           <Canvas>
-            <div className="flex justify-between items-center mb-8">
-              <div>
-                <BiRefresh
-                  onClick={() => {
-                    setEffect(true);
-                    get();
-                    getSongs();
-                  }}
-                  className={`${
-                    effect && "animate-spin-up"
-                  } cursor-pointer bg-[#444141]/40 hover:bg-[#444141]/70 rounded-full`}
-                  size={25}
-                  onAnimationEnd={() => setEffect(false)}
-                />
+            {loading ? (
+              <div className="flex justify-center">
+                <RiLoader3Line className="w-8 h-8 animate-spin text-[#FF7B54]" />
               </div>
-              <div className="flex items-center gap-4">
-                <AiOutlineEdit
-                  className="cursor-pointer text-[#D7E9B9] hover:text-[#FF7B54]"
-                  size={23}
-                  onClick={() => {
-                    setToggleForm(!toggleForm);
-                  }}
-                />
-                <button
-                  onClick={() => {
-                    onDelete(Number(details?.id));
-                  }}
-                  className="bg-[#444141]/40 hover:bg-red-500/80 px-4 py-1 rounded-md"
-                >
-                  DELETE
-                </button>
-              </div>
-            </div>
-            {toggleForm && (
+            ) : (
               <div>
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    submitHandler(form);
-                  }}
-                  className="mb-12 flex flex-col md:flex-row justify-between gap-4"
-                >
-                  <input
-                    type="text"
-                    placeholder={details?.name as string}
-                    name="name"
-                    value={form.name as string}
-                    onChange={onChangeHandler}
-                    className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
+                <div className="flex justify-between items-center mb-8">
+                  <div>
+                    <BiRefresh
+                      onClick={() => {
+                        setEffect(true);
+                        get();
+                        getSongs();
+                      }}
+                      className={`${
+                        effect && "animate-spin-up"
+                      } cursor-pointer bg-[#444141]/40 hover:bg-[#444141]/70 rounded-full`}
+                      size={25}
+                      onAnimationEnd={() => setEffect(false)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <AiOutlineEdit
+                      className="cursor-pointer text-[#D7E9B9] hover:text-[#FF7B54]"
+                      size={23}
+                      onClick={() => {
+                        setToggleForm(!toggleForm);
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        onDelete(Number(details?.id));
+                      }}
+                      className="bg-[#444141]/40 hover:bg-red-500/80 px-4 py-1 rounded-md"
+                    >
+                      DELETE
+                    </button>
+                  </div>
+                </div>
+                {toggleForm && (
+                  <div>
+                    <form
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        submitHandler(form);
+                      }}
+                      className="mb-12 flex flex-col md:flex-row justify-between gap-4"
+                    >
+                      <input
+                        type="text"
+                        placeholder={details?.name as string}
+                        name="name"
+                        value={form.name as string}
+                        onChange={onChangeHandler}
+                        className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
+                      />
+                      <input
+                        type="text"
+                        placeholder={details?.image as string}
+                        name="image"
+                        value={form.image as string}
+                        onChange={onChangeHandler}
+                        className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
+                      />
+                      <Button title="Update" type="submit" />
+                    </form>
+                  </div>
+                )}
+                <div className="md:flex items-end gap-8 mb-16">
+                  <img
+                    src={details?.image as string}
+                    alt={details?.name as string}
+                    className="md:w-60 md:h-60 drop-shadow-[0_2px_10px_#1f2937] rounded-sm object-cover object-center"
                   />
-                  <input
-                    type="text"
-                    placeholder={details?.image as string}
-                    name="image"
-                    value={form.image as string}
-                    onChange={onChangeHandler}
-                    className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
-                  />
-                  <Button title="Update" type="submit" />
-                </form>
+                  <div className="text-left">
+                    <p className="font-medium text-sm">ALBUM</p>
+                    <p className="text-6xl font-bold mt-2">{details?.name}</p>
+                    <div className="flex items-center text-zinc-400 mt-8 mb-2">
+                      <p>{moment(details?.createdAt).fromNow()}</p>
+                      <BsDot /> <p>{songs?.length} songs</p>
+                    </div>
+                  </div>
+                </div>
+                <Songs songs={songs} getSongs={getSongs} />
               </div>
             )}
-            <div className="md:flex items-end gap-8 mb-16">
-              <img
-                src={details?.image as string}
-                alt={details?.name as string}
-                className="md:w-60 md:h-60 drop-shadow-[0_2px_10px_#1f2937] rounded-sm object-cover object-center"
-              />
-              <div className="text-left">
-                <p className="font-medium text-sm">ALBUM</p>
-                <p className="text-6xl font-bold mt-2">{details?.name}</p>
-                <div className="flex items-center text-zinc-400 mt-8 mb-2">
-                  <p>{moment(details?.createdAt).fromNow()}</p>
-                  <BsDot /> <p>{songs?.length} songs</p>
-                </div>
-              </div>
-            </div>
-            <Songs songs={songs} getSongs={getSongs} />
           </Canvas>
         </div>
       </main>
