@@ -21,7 +21,7 @@ interface FormData {
   image: string;
 }
 
-const Songs = ({ songs, getSongs }: any) => {
+const Songs = ({ songs, getSongs, toggleCreateForm }: any) => {
   const [toggleForm, setToggleForm] = useState(false);
   const [deleteID, setDeleteID] = useState<Number>();
   const [details, setDetails] = useState<Songs>();
@@ -69,7 +69,7 @@ const Songs = ({ songs, getSongs }: any) => {
 
   return (
     <div>
-      <SongForm getSongs={getSongs} />
+      <SongForm getSongs={getSongs} toggleCreateForm={toggleCreateForm} />
       {songs?.length === 0 ? (
         ""
       ) : (
