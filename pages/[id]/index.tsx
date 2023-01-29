@@ -185,6 +185,7 @@ const AlbumDetails = () => {
                     <button
                       onClick={() => {
                         onDelete(Number(details?.id));
+                        get();
                       }}
                       className="bg-[#444141]/40 hover:bg-red-500/80 px-4 py-1 rounded-md"
                     >
@@ -198,6 +199,7 @@ const AlbumDetails = () => {
                       onSubmit={(event) => {
                         event.preventDefault();
                         submitHandler(form);
+                        get();
                       }}
                       className="mb-12 flex flex-col md:flex-row justify-between gap-4"
                     >
