@@ -8,7 +8,7 @@ interface FormData {
   image: String;
 }
 
-const AlbumForm = () => {
+const AlbumForm = ({ get }: any) => {
   const [form, setForm] = useState<FormData>({ name: "", image: "" });
   const router = useRouter();
 
@@ -43,6 +43,7 @@ const AlbumForm = () => {
       onSubmit={(e: any) => {
         e.preventDefault();
         submitHandler(form);
+        get();
       }}
       className="mb-16 flex flex-col md:flex-row md:justify-between gap-4"
     >

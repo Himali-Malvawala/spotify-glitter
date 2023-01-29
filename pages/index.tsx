@@ -79,7 +79,7 @@ const Home = () => {
                     onAnimationEnd={() => setEffect(false)}
                   />
                 </div>
-                <AlbumForm />
+                <AlbumForm get={get} />
                 {/* <p className="mb-10 underline-offset-2 underline text-lg text-zinc-300">
               This website is currently under development. Please comeback
               later!
