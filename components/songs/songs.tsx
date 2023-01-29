@@ -5,6 +5,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import axios from "axios";
 import moment from "moment";
 import SongForm from "./SongForm";
+import Button from "../button/Button";
 
 interface Songs {
   albumID: Number;
@@ -15,9 +16,16 @@ interface Songs {
   updatedAt: Date;
 }
 
+interface FormData {
+  name: string;
+  image: string;
+}
+
 const Songs = ({ songs, getSongs }: any) => {
   const [toggleForm, setToggleForm] = useState(false);
   const [deleteID, setDeleteID] = useState<Number>();
+  const [details, setDetails] = useState<Songs>();
+  const [form, setForm] = useState<FormData>({ name: "", image: "" });
   const router = useRouter();
   const albumID = router?.query?.id;
 
@@ -35,6 +43,30 @@ const Songs = ({ songs, getSongs }: any) => {
       });
     // }
   };
+
+  //update a song
+
+  const onChangeHandler = (event: any) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
+
+  const submitHandler = (data: FormData, id: number) => {
+    try {
+      axios
+        .put(`/api/album/${albumID}/songs/${id}`, data)
+        .then((res) => {
+          // setDetails({ name: "", image: "" })
+          setToggleForm(false);
+          getSongs();
+        })
+        .catch((err) => {
+          console.log("err while updating", err);
+        });
+    } catch (error) {
+      console.log("error while updating the song", error);
+    }
+  };
+
   return (
     <div>
       <SongForm getSongs={getSongs} />
@@ -47,18 +79,47 @@ const Songs = ({ songs, getSongs }: any) => {
             <div className="w-[30%] text-sm font-normal">DATE ADDED</div>
             <div className="w-[10%] text-sm font-normal">EDIT/DELETE</div>
           </div>
-          {toggleForm && <p>okayokayokay</p>}
+          {toggleForm && (
+            <div>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  submitHandler(form, Number(details?.id));
+                  getSongs();
+                }}
+                className="mb-7 flex flex-col md:flex-row justify-between gap-4"
+              >
+                <input
+                  type="text"
+                  placeholder={details?.name}
+                  name="name"
+                  value={form?.name}
+                  onChange={onChangeHandler}
+                  className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
+                />
+                <input
+                  type="text"
+                  placeholder={details?.image}
+                  name="image"
+                  value={form?.image}
+                  onChange={onChangeHandler}
+                  className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
+                />
+                <Button title="Update" type="submit" />
+              </form>
+            </div>
+          )}
 
           {songs?.map((item: Songs, index: any) => {
             return (
               <div key={index}>
-                <div className="flex hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-md group animate">
+                <div className="flex hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-full group animate">
                   <div className="w-[60%] flex gap-2">
                     <div>
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-10 h-10 rounded-sm shadow-2xl"
+                        className="w-10 h-10 rounded-full shadow-2xl object-cover object-center"
                       />
                     </div>
                     <div className="font-medium">{item.name}</div>
@@ -72,6 +133,7 @@ const Songs = ({ songs, getSongs }: any) => {
                       size={23}
                       onClick={() => {
                         setToggleForm(!toggleForm);
+                        setDetails(item);
                       }}
                     />
                     <MdDeleteOutline
