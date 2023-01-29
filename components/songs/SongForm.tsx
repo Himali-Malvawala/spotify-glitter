@@ -8,7 +8,7 @@ interface FormData {
   image: string;
 }
 
-const SongForm = ({ getSongs }: any) => {
+const SongForm = ({ getSongs, toggleCreateForm }: any) => {
   const [form, setForm] = useState<FormData>({ name: "", image: "" });
   const router = useRouter();
   const albumID = router?.query?.id;
@@ -37,34 +37,36 @@ const SongForm = ({ getSongs }: any) => {
 
   return (
     <div>
-      <form
-        onSubmit={(event: any) => {
-          event.preventDefault();
-          submitHandler(form);
-          getSongs();
-        }}
-        className="mb-10 flex flex-col md:flex-row md:justify-between gap-4"
-      >
-        <input
-          required
-          name="name"
-          type="text"
-          placeholder="NAME"
-          value={form?.name}
-          onChange={onChangeHandler}
-          className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
-        />
-        <input
-          required
-          name="image"
-          type="text"
-          placeholder="IMAGE"
-          value={form?.image}
-          onChange={onChangeHandler}
-          className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
-        />
-        <Button title="Create 🎶" type="submit" />
-      </form>
+      {toggleCreateForm && (
+        <form
+          onSubmit={(event: any) => {
+            event.preventDefault();
+            submitHandler(form);
+            getSongs();
+          }}
+          className="mb-10 flex flex-col md:flex-row md:justify-between gap-4"
+        >
+          <input
+            required
+            name="name"
+            type="text"
+            placeholder="NAME"
+            value={form?.name}
+            onChange={onChangeHandler}
+            className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
+          />
+          <input
+            required
+            name="image"
+            type="text"
+            placeholder="IMAGE"
+            value={form?.image}
+            onChange={onChangeHandler}
+            className="flex-grow px-2 py-3 rounded-lg focus:outline-none focus:border-[#FFD56F] focus:ring-[#FFD56F] focus:ring-1 shadow-2xl"
+          />
+          <Button title="Create 🎶" type="submit" />
+        </form>
+      )}
     </div>
   );
 };
