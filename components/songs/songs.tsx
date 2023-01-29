@@ -74,7 +74,8 @@ const Songs = ({ songs, getSongs }: any) => {
         ""
       ) : (
         <div className="text-left">
-          <div className="border-b-[1px] text-zinc-400 border-zinc-400 flex mb-3 px-3">
+          <hr className="md:hidden my-5 border-[#FF7B54] border-[1px]" />
+          <div className="hidden border-b-[1px] text-zinc-400 border-zinc-400 md:flex mb-3 px-3">
             <div className="w-[60%] text-sm font-normal">TITLE</div>
             <div className="w-[30%] text-sm font-normal">DATE ADDED</div>
             <div className="w-[10%] text-sm font-normal">EDIT/DELETE</div>
@@ -113,8 +114,8 @@ const Songs = ({ songs, getSongs }: any) => {
           {songs?.map((item: Songs, index: any) => {
             return (
               <div key={index}>
-                <div className="flex hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-full group animate">
-                  <div className="w-[60%] flex gap-2">
+                <div className="flex hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-full group animate-fade-in-up">
+                  <div className="w-[75%] md:w-[60%] flex items-center gap-2">
                     <div>
                       <img
                         src={item.image}
@@ -122,12 +123,17 @@ const Songs = ({ songs, getSongs }: any) => {
                         className="w-10 h-10 rounded-full shadow-2xl object-cover object-center"
                       />
                     </div>
-                    <div className="font-medium">{item.name}</div>
+                    <div>
+                      <div className="font-medium">{item.name}</div>
+                      <div className="md:hidden text-zinc-400 font-normal text-xs">
+                        {moment(item.createdAt).fromNow()}
+                      </div>
+                    </div>
                   </div>
-                  <div className="w-[30%] text-zinc-400 font-medium">
+                  <div className="hidden md:block w-[30%] text-zinc-400 font-medium">
                     {moment(item.createdAt).fromNow()}
                   </div>
-                  <div className="w-[10%] flex items-center gap-3">
+                  <div className="w-[25%] md:w-[10%] flex items-center gap-3">
                     <AiOutlineEdit
                       className="cursor-pointer text-[#D7E9B9] hover:text-[#FF7B54]"
                       size={23}
