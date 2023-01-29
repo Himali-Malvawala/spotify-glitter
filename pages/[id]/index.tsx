@@ -50,6 +50,7 @@ const AlbumDetails = () => {
   const [hasFetched, setHasFetched] = useState(false);
   const [effect, setEffect] = useState(false);
   const [toggleForm, setToggleForm] = useState(false);
+  const [toggleCreateForm, setToggleCreateForm] = useState(false);
   const [form, setForm] = useState<FormData>({ name: "", image: "" });
   const [songs, setSongs] = useState<SongsData[]>();
   const [loading, setLoading] = useState(true);
@@ -223,7 +224,7 @@ const AlbumDetails = () => {
                     </form>
                   </div>
                 )}
-                <div className="md:flex items-end gap-8 mb-14 md:mb-16 animate-fade-in-up">
+                <div className="md:flex items-end gap-8 mb-8 md:mb-14 animate-fade-in-up">
                   <img
                     src={details?.image as string}
                     alt={details?.name as string}
@@ -238,9 +239,21 @@ const AlbumDetails = () => {
                       <p>{moment(details?.createdAt).fromNow()}</p>
                       <BsDot /> <p>{songs?.length} songs</p>
                     </div>
+                    <button
+                      onClick={() => {
+                        setToggleCreateForm(!toggleCreateForm);
+                      }}
+                      className="bg-[#FF7B54]/90 hover:bg-[#FF7B54] font-medium px-2 py-2 rounded-md mt-3"
+                    >
+                      Create 🎶
+                    </button>
                   </div>
                 </div>
-                <Songs songs={songs} getSongs={getSongs} />
+                <Songs
+                  songs={songs}
+                  getSongs={getSongs}
+                  toggleCreateForm={toggleCreateForm}
+                />
               </div>
             )}
           </Canvas>
