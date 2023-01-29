@@ -12,11 +12,11 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { RiLoader3Line } from "react-icons/ri";
 import Canvas from "../../components/canvas/Canvas";
 import Button from "../../components/button/Button";
-// import Songs from "../../components/songs/songs";
+import Songs from "../../components/songs/songs";
 
-const Songs = dynamic(() => import("../../components/songs/songs"), {
-  ssr: false,
-});
+// const Songs = dynamic(() => import("../../components/songs/songs"), {
+//   ssr: false,
+// });
 
 const rubik = Rubik({
   style: "italic",
@@ -31,7 +31,7 @@ interface Details {
   createdAt: Date;
 }
 
-interface Songs {
+interface SongsData {
   albumID: Number;
   createdAt: Date;
   id: Number;
@@ -51,7 +51,7 @@ const AlbumDetails = () => {
   const [effect, setEffect] = useState(false);
   const [toggleForm, setToggleForm] = useState(false);
   const [form, setForm] = useState<FormData>({ name: "", image: "" });
-  const [songs, setSongs] = useState<Songs[]>();
+  const [songs, setSongs] = useState<SongsData[]>();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const albumID = router?.query?.id;
