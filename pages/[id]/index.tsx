@@ -223,16 +223,18 @@ const AlbumDetails = () => {
                     </form>
                   </div>
                 )}
-                <div className="md:flex items-end gap-8 mb-16">
+                <div className="md:flex items-end gap-8 mb-14 md:mb-16 animate-fade-in-up">
                   <img
                     src={details?.image as string}
                     alt={details?.name as string}
-                    className="md:w-60 md:h-60 drop-shadow-[0_2px_10px_#1f2937] rounded-sm object-cover object-center"
+                    className="h-60 w-full md:w-60 md:h-60 drop-shadow-[0_2px_12px_#1A120B] rounded-sm object-cover object-center"
                   />
                   <div className="text-left">
-                    <p className="font-medium text-sm">ALBUM</p>
-                    <p className="text-6xl font-bold mt-2">{details?.name}</p>
-                    <div className="flex items-center text-zinc-400 mt-8 mb-2">
+                    <p className="font-medium text-sm mt-7 md:mt-0">ALBUM</p>
+                    <p className="text-5xl md:text-6xl font-bold mt-2">
+                      {details?.name}
+                    </p>
+                    <div className="flex items-center text-zinc-400 mt-5 md:mt-8 mb-2">
                       <p>{moment(details?.createdAt).fromNow()}</p>
                       <BsDot /> <p>{songs?.length} songs</p>
                     </div>
@@ -242,6 +244,7 @@ const AlbumDetails = () => {
               </div>
             )}
           </Canvas>
+          <div></div>
         </div>
       </main>
     </div>
