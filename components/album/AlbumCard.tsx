@@ -5,7 +5,19 @@ import { FaPlay } from "react-icons/fa";
 const AlbumCard = (props: any) => {
   return (
     <Link href={`/${props?.item?.id}`}>
-      <div className="group w-52 h-fit  bg-[#444141]/40 hover:bg-[#444141]/70 pt-[0.70rem] pb-8 flex flex-col items-center rounded-lg shadow-xl animate-fade-in-up cursor-pointer">
+      <div className="md:hidden group animate-fade-in-up">
+        <div>
+          <img
+            src={props?.item?.image}
+            alt={props?.item?.name}
+            className="w-32 h-32 sm:w-40 sm:h-40 object-cover object-center drop-shadow-xl"
+          />
+          <h6 className="text-left ext-ellipsis overflow-hidden w-32 sm:w-40 mt-1 font-medium text-zinc-200 group-hover:text-white">
+            {props?.item?.name}
+          </h6>
+        </div>
+      </div>
+      <div className="hidden group w-52 h-fit  bg-[#444141]/40 hover:bg-[#444141]/70 pt-[0.70rem] pb-8 md:flex flex-col items-center rounded-lg shadow-xl animate-fade-in-up cursor-pointer">
         <div className="relative">
           <img
             src={props?.item?.image}
