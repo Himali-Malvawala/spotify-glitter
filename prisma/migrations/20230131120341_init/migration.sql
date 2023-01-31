@@ -1,8 +1,9 @@
 -- CreateTable
 CREATE TABLE "Album" (
     "id" SERIAL NOT NULL,
-    "name" TEXT,
-    "image" TEXT,
+    "name" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Album_pkey" PRIMARY KEY ("id")
 );
@@ -10,10 +11,10 @@ CREATE TABLE "Album" (
 -- CreateTable
 CREATE TABLE "Songs" (
     "id" SERIAL NOT NULL,
-    "name" TEXT,
-    "image" TEXT,
-    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
+    "name" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "albumID" INTEGER NOT NULL,
 
     CONSTRAINT "Songs_pkey" PRIMARY KEY ("id")
