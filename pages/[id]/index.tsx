@@ -10,6 +10,7 @@ import { BiRefresh } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiLoader3Line } from "react-icons/ri";
+import toast, { Toaster } from "react-hot-toast";
 import Canvas from "../../components/canvas/Canvas";
 import Button from "../../components/button/Button";
 import Songs from "../../components/songs/songs";
@@ -87,6 +88,9 @@ const AlbumDetails = () => {
       })
       .catch((err) => {
         console.log("error onDelete", err);
+        if (err?.response?.data?.error?.code === "P2003") {
+          toast.error("You can not delete an album that has songs!");
+        }
       });
   };
 
@@ -146,6 +150,7 @@ const AlbumDetails = () => {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <main>
+        <Toaster />
         <div
           className={`fixed top-10 left-[10%] xl:left-[14%] -z-10 text-5xl md:text-6xl lg:text-8xl xl:text-[7rem] 2xl:text-[9rem] ${rubik.className} tracking-wide text-[#D7E9B9] drop-shadow-[0_1px_5px_#FF7B54] cursor-pointer`}
         >
