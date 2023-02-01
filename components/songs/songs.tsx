@@ -114,7 +114,7 @@ const Songs = ({ songs, getSongs, toggleCreateForm }: any) => {
           {songs?.map((item: Songs, index: any) => {
             return (
               <div key={index}>
-                <div className="flex hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-full group animate-fade-in-up">
+                <div className="flex items-center hover:bg-[#444141]/70 cursor-pointer py-[0.65rem] px-3 rounded-full group animate-fade-in-up">
                   <div className="w-[75%] md:w-[60%] flex items-center gap-2">
                     <div>
                       <img
